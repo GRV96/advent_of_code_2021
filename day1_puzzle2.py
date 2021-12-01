@@ -11,16 +11,30 @@ class Measurement:
 		self._window_ids = tuple(window_ids)
 
 	def __str__(self):
-		if len(self._window_ids) >= 2:
-			window_str = str(self._window_ids)
-		else:
-			window_str = f"({self._window_ids[0]})"
+		measurement_str = f"{self._data}"
+		window_count = self.window_count
 
-		return f"{self._data} {window_str}"
+		if window_count == 1:
+			window_str = f"({self._window_ids[0]})"
+			measurement_str += f" {window_str}"
+
+		elif window_count > 1:
+			window_str = f"({self._window_ids[0]}"
+			for i in range(1, window_count):
+				window_str += f", {self._window_ids[i]}"
+			window_str += ")"
+
+			measurement_str += f" {window_str}"
+
+		return measurement_str
 
 	@property
 	def data(self):
 		return self._data
+
+	@property
+	def window_count(self):
+		return len(self._window_ids)
 
 	@property
 	def window_ids(self):
