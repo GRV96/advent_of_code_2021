@@ -9,7 +9,7 @@ data_path = Path(argv[1])
 depths = data_from_lines(data_path, int)
 
 increases = 0
-prev_depth = 10e6
+prev_depth = 10e6 # Arbitrarily high number
 
 for depth in depths:
 	if depth > prev_depth:

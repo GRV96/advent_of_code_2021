@@ -2,6 +2,9 @@ _NEW_LINE = "\n"
 
 
 def data_from_lines(data_path, conversion=None):
+	# data_path is of type pathlib.Path.
+	# conversion is a function that takes a line as its
+	# only argument and transforms it into usable data.
 	with data_path.open(mode="r") as data_file:
 		content = data_file.read()
 
