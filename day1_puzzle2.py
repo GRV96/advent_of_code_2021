@@ -4,50 +4,49 @@ from sys import argv
 from data_reading import data_from_lines
 
 
-class Measurement:
+WINDOW_SIZE = 3
 
-	def __init__(self, data, window_ids):
-		self._data = data
-		self._window_ids = tuple(window_ids)
 
-	def __str__(self):
-		measurement_str = f"{self._data}"
-		window_count = self.window_count
+class MeasurementWindow:
 
-		if window_count == 1:
-			window_str = f"({self._window_ids[0]})"
-			measurement_str += f" {window_str}"
+	def __init__(self, measurements):
+		self._measurements = tuple(measurements)
+		self._sum = sum(self._measurements)
 
-		elif window_count > 1:
-			window_str = f"({self._window_ids[0]}"
-			for i in range(1, window_count):
-				window_str += f", {self._window_ids[i]}"
-			window_str += ")"
+	def __iter__(self):
+		return iter(self._measurements)
 
-			measurement_str += f" {window_str}"
-
-		return measurement_str
+	def __len__(self):
+		return len(self._measurements)
 
 	@property
-	def data(self):
-		return self._data
+	def measurements(self):
+		return self._measurements
 
 	@property
-	def window_count(self):
-		return len(self._window_ids)
-
-	@property
-	def window_ids(self):
-		return self._window_ids
-
-
-def measurement_from_line(line):
-	parts = line.split()
-	return Measurement(parts[0], parts[1:])
+	def sum(self):
+		return self._sum
 
 
 data_path = Path(argv[1])
 
-measurements = data_from_lines(data_path, measurement_from_line)
-for measurement in measurements:
-	print(measurement)
+depths = data_from_lines(data_path, int)
+depth_count = len(depths)
+loop_limit = depth_count - depth_count % WINDOW_SIZE
+
+windows = list()
+for i in range(loop_limit):
+	windows.append(MeasurementWindow(depths[i: i+WINDOW_SIZE]))
+
+increases = 0
+prev_sum = 10e6 # Arbitrarily high number
+
+for window in windows:
+	sum = window.sum
+
+	if sum > prev_sum:
+		increases += 1
+
+	prev_sum = sum
+
+print(f"Sum increases: {increases}")
