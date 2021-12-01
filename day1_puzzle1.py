@@ -1,14 +1,12 @@
-depths = [
-	199,
-	200,
-	208,
-	210,
-	200,
-	207,
-	240,
-	269,
-	260,
-	263]
+from pathlib import Path
+from sys import argv
+
+from data_reading import data_from_lines
+
+
+data_path = Path(argv[1])
+
+depths = data_from_lines(data_path, int)
 
 increases = 0
 prev_depth = 10e6
