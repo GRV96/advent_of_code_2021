@@ -9,6 +9,10 @@ EMPTY_STR = ""
 ONE_AS_STR = "1"
 ZERO_AS_STR = "0"
 
+class RatingValue(Enum):
+	OG = 0 # Oxygen generator rating
+	CS = 1 # CO2 scrubber rating
+
 
 def get_most_common_bit(bin_numbers, index):
 	mcb = EMPTY_STR
@@ -33,16 +37,26 @@ def get_most_common_bit(bin_numbers, index):
 	return mcb
 
 
-def make_bit_criterium(mcb):
+def make_bit_criteria(mcb, rating_value):
 	if mcb == EMPTY_STR: # Equal number of zeroes and ones
-		og_criteria = lambda bit: bit == ONE_AS_STR
-		cs_criteria = lambda bit: bit == ZERO_AS_STR
+		if rating_value == RatingValue.OG:
+			return lambda bit: bit == ONE_AS_STR
+
+		elif rating_value == RatingValue.CS:
+			return lambda bit: bit == ZERO_AS_STR
+
+		else:
+			return None
 
 	else:
-		og_criteria = lambda bit: bit == mcb
-		cs_criteria = lambda bit: bit != mcb
+		if rating_value == RatingValue.OG:
+			return lambda bit: bit == mcb
 
-	return og_criteria, cs_criteria
+		elif rating_value == RatingValue.CS:
+			return lambda bit: bit != mcb
+
+		else:
+			return None
 
 
 data_path = Path(argv[1])
@@ -54,8 +68,8 @@ og_numbers = list(bin_numbers)
 cs_numbers = list(bin_numbers)
 
 for i in range(bit_count):
-	most_common_bit = get_most_common_bit(og_numbers, i)
-	og_criteria, cs_criteria = make_bit_criterium(most_common_bit)
+	og_most_common_bit = get_most_common_bit(og_numbers, i)
+	og_criteria = make_bit_criteria(og_most_common_bit, RatingValue.OG)
 
 	j = 0
 	while len(og_numbers) > 1:
@@ -71,6 +85,8 @@ for i in range(bit_count):
 		else:
 			og_numbers.remove(number)
 
+	cs_most_common_bit = get_most_common_bit(cs_numbers, i)
+	cs_criteria = make_bit_criteria(cs_most_common_bit, RatingValue.CS)
 	j = 0
 	while len(cs_numbers) > 1:
 		try:
