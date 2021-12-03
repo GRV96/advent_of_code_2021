@@ -53,6 +53,7 @@ for i in range(bit_count):
 		bit = number[i]
 
 		if most_common_bit == EMPTY_STR:
+			# Equal number of zeroes and ones
 			if bit == ZERO_AS_STR:
 				og_numbers.remove(number)
 				j -= 1
@@ -74,6 +75,7 @@ for i in range(bit_count):
 		bit = number[i]
 
 		if most_common_bit == EMPTY_STR:
+			# Equal number of zeroes and ones
 			if bit == ONE_AS_STR:
 				cs_numbers.remove(number)
 				j -= 1
