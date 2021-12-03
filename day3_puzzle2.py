@@ -10,11 +10,6 @@ ONE_AS_STR = "1"
 ZERO_AS_STR = "0"
 
 
-class RatingValue(Enum):
-	OG = 0 # Oxygen generator rating
-	CS = 1 # CO2 scrubber rating
-
-
 def get_most_common_bit(bin_numbers, index):
 	mcb = EMPTY_STR
 	ones = 0
