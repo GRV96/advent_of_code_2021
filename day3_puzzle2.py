@@ -1,3 +1,4 @@
+from enum import Enum
 from pathlib import Path
 from sys import argv
 
@@ -7,6 +8,11 @@ from data_reading import data_from_lines
 EMPTY_STR = ""
 ONE_AS_STR = "1"
 ZERO_AS_STR = "0"
+
+
+class RatingValue(Enum):
+	OG = 0 # Oxygen generator rating
+	CS = 1 # CO2 scrubber rating
 
 
 def get_most_common_bit(bin_numbers, index):
@@ -32,6 +38,18 @@ def get_most_common_bit(bin_numbers, index):
 	return mcb
 
 
+def make_bit_criterium(mcb):
+	if mcb == EMPTY_STR: # Equal number of zeroes and ones
+		og_criteria = lambda bit: bit == ONE_AS_STR
+		cs_criteria = lambda bit: bit == ZERO_AS_STR
+
+	else:
+		og_criteria = lambda bit: bit == mcb
+		cs_criteria = lambda bit: bit != mcb
+
+	return og_criteria, cs_criteria
+
+
 data_path = Path(argv[1])
 
 bin_numbers = data_from_lines(data_path)
@@ -42,6 +60,7 @@ cs_numbers = list(bin_numbers)
 
 for i in range(bit_count):
 	most_common_bit = get_most_common_bit(og_numbers, i)
+	og_criteria, cs_criteria = make_bit_criterium(most_common_bit)
 
 	j = 0
 	while len(og_numbers) > 1:
@@ -52,18 +71,10 @@ for i in range(bit_count):
 
 		bit = number[i]
 
-		if most_common_bit == EMPTY_STR:
-			# Equal number of zeroes and ones
-			if bit == ZERO_AS_STR:
-				og_numbers.remove(number)
-				j -= 1
-
+		if og_criteria(bit):
+			j += 1
 		else:
-			if bit != most_common_bit:
-				og_numbers.remove(number)
-				j -= 1
-
-		j += 1
+			og_numbers.remove(number)
 
 	j = 0
 	while len(cs_numbers) > 1:
@@ -74,18 +85,10 @@ for i in range(bit_count):
 
 		bit = number[i]
 
-		if most_common_bit == EMPTY_STR:
-			# Equal number of zeroes and ones
-			if bit == ONE_AS_STR:
-				cs_numbers.remove(number)
-				j -= 1
-
+		if cs_criteria(bit):
+			j += 1
 		else:
-			if bit == most_common_bit:
-				cs_numbers.remove(number)
-				j -= 1
-
-		j += 1
+			cs_numbers.remove(number)
 
 og_rating = int(og_numbers[0], 2)
 cs_rating = int(cs_numbers[0], 2)
