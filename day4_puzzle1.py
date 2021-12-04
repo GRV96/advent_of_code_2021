@@ -12,12 +12,10 @@ grid_range = range(len(grids))
 
 winning_grid_num = -1
 for number in numbers:
-	#print(f"Number: {number}")
 
 	for i in grid_range:
 		grid = grids[i]
 		marking_result = grid.mark_number(number)
-		#print(f"\tGrid {i}: {marking_result}")
 
 		if marking_result == MarkingResult.WIN:
 			winning_grid_num = i
