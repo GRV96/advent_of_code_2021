@@ -4,6 +4,8 @@ from day4_bingo_grid import BingoGrid
 _COMMA = ","
 _NEW_LINE = "\n"
 
+_FILE_MODE_R = "r"
+
 _TYPES_LIST_TUPLE = (list, tuple)
 
 
@@ -28,7 +30,7 @@ def data_from_lines(data_path, conversion=None):
 
 def lines_from_file(path):
 	# path is of type pathlib.Path.
-	with path.open(mode="r") as data_file:
+	with path.open(mode=_FILE_MODE_R) as data_file:
 		content = data_file.read()
 
 	return content.split(_NEW_LINE)
