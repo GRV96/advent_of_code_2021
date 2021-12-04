@@ -4,6 +4,8 @@ from day4_bingo_grid import BingoGrid
 _COMMA = ","
 _NEW_LINE = "\n"
 
+_TYPES_LIST_TUPLE = (list, tuple)
+
 
 def data_from_lines(data_path, conversion=None):
 	# data_path is of type pathlib.Path.
@@ -65,7 +67,7 @@ def _tuplist_to_ints(tuplist):
 	for i in range(len(tuplist)):
 		x = tuplist[i]
 
-		if isinstance(x, (list, tuple)):
+		if isinstance(x, _TYPES_LIST_TUPLE):
 			_tuplist_to_ints(x)
 
 		else:
