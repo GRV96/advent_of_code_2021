@@ -1,6 +1,7 @@
 from day4_bingo_grid import BingoGrid
 
 
+_COMMA = ","
 _NEW_LINE = "\n"
 
 
@@ -35,7 +36,7 @@ def read_bingo(data_path):
 	lines = lines_from_file(data_path)
 	line_count = len(lines)
 
-	numbers = lines[0].split(",")
+	numbers = lines[0].split(_COMMA)
 	_tuplist_to_ints(numbers)
 
 	grid_borders = list()
