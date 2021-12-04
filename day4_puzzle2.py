@@ -11,6 +11,7 @@ numbers, grids = read_bingo(data_path)
 grid_count = len(grids)
 grid_range = range(grid_count)
 
+# The set ensures that no winner is counted more than once.
 winners = set()
 last_winner_num = -1
 for number in numbers:
