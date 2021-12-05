@@ -22,6 +22,7 @@ def _sign(number):
 
 data_path = Path(argv[1])
 
+# Only puzzle 2 considers the diagonals.
 try:
 	consider_diagonals = argv[2].lower() == "d"
 except IndexError:
