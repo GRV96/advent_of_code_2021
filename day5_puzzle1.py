@@ -8,7 +8,24 @@ _ARROW = " -> "
 _COMMA = ","
 
 
+def _sign(number):
+	sign = 0
+
+	if number > 0:
+		sign = 1
+
+	elif number < 0:
+		sign = -1
+
+	return sign
+
+
 data_path = Path(argv[1])
+
+try:
+	consider_diagonals = argv[2].lower() == "d"
+except IndexError:
+	consider_diagonals = False
 
 vent_line_data = data_from_lines(data_path)
 
@@ -25,20 +42,32 @@ for vld in vent_line_data:
 	end_x = int(end[0])
 	end_y = int(end[1])
 
+	delta_x = end_x - start_x
+	delta_y = end_y - start_y
+	sign_delta_x = _sign(delta_x)
+	sign_delta_y = _sign(delta_y)
+
+	step = sign_delta_x if delta_x != 0 else sign_delta_y
+
 	# Vertical line
 	if start_x == end_x:
-		step = 1 if end_y >= start_y else -1
-
 		for i in range(start_y, end_y+step, step):
 			coord_key = (start_x, i)
 			diagram[coord_key] = diagram.get(coord_key, 0) + 1
 
 	# Horizontal line
-	if start_y == end_y:
-		step = 1 if end_x >= start_x else -1
-
+	elif start_y == end_y:
 		for j in range(start_x, end_x+step, step):
 			coord_key = (j, start_y)
+			diagram[coord_key] = diagram.get(coord_key, 0) + 1
+
+	# Diagonal line
+	elif consider_diagonals:
+		point_count = abs(delta_x) + 1 if delta_x > 0 else abs(delta_y) + 1
+
+		for n in range(point_count):
+			coord_key =\
+				(start_x + n * sign_delta_x, start_y + n * sign_delta_y)
 			diagram[coord_key] = diagram.get(coord_key, 0) + 1
 
 hot_point_count = 0
