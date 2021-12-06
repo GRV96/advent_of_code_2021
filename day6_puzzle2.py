@@ -1,7 +1,9 @@
 from pathlib import Path
 from sys import argv
 
-from data_reading import convert_list_content, data_from_lines
+from data_reading import\
+	convert_list_content,\
+	data_from_lines
 
 
 _COMMA = ","
@@ -9,6 +11,8 @@ _COMMA = ","
 _BIRTH_DELAY = 7
 _FIRST_BIRTH_DELAY = 9
 
+
+# This script performs the same task as day6_puzzle1, but much faster.
 
 data_path = Path(argv[1])
 duration = int(argv[2])

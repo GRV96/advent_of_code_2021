@@ -1,13 +1,15 @@
 from pathlib import Path
 from sys import argv
 
-from data_reading import convert_list_content, data_from_lines
+from data_reading import\
+	convert_list_content,\
+	data_from_lines
 
 
 _COMMA = ","
 
-_INIT_TIME = 8
-_RESET_TIME = 6
+_BIRTH_DELAY = 6
+_FIRST_BIRTH_DELAY = 8
 
 
 data_path = Path(argv[1])
@@ -25,7 +27,7 @@ for day in range(duration):
 			lanternfish[i] -= 1
 
 		else:
-			lanternfish[i] = _RESET_TIME
-			lanternfish.append(_INIT_TIME)
+			lanternfish[i] = _BIRTH_DELAY
+			lanternfish.append(_FIRST_BIRTH_DELAY)
 
 print(f"{len(lanternfish)} lanternfish after {duration} days")
