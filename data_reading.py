@@ -7,16 +7,18 @@ _NEW_LINE = "\n"
 _FILE_MODE_R = "r"
 
 
-def convert_list_content(tuplist, conversion):
-	for i in range(len(tuplist)):
-		x = tuplist[i]
+def convert_list_content(some_list, conversion):
+	# conversion is a function that takes a list item as its
+	# only argument and transforms it into a usable value.
+	for i in range(len(some_list)):
+		item = some_list[i]
 
-		if isinstance(x, list):
-			convert_list_content(x)
+		if isinstance(item, list):
+			convert_list_content(item)
 
 		else:
 			try:
-				tuplist[i] = conversion(x)
+				some_list[i] = conversion(item)
 			except:
 				pass
 
