@@ -6,7 +6,19 @@ _NEW_LINE = "\n"
 
 _FILE_MODE_R = "r"
 
-_TYPES_LIST_TUPLE = (list, tuple)
+
+def convert_list_content(tuplist, conversion):
+	for i in range(len(tuplist)):
+		x = tuplist[i]
+
+		if isinstance(x, list):
+			convert_list_content(x)
+
+		else:
+			try:
+				tuplist[i] = conversion(x)
+			except:
+				pass
 
 
 def data_from_lines(data_path, conversion=None):
@@ -41,7 +53,7 @@ def read_bingo(data_path):
 	line_count = len(lines)
 
 	numbers = lines[0].split(_COMMA)
-	_tuplist_to_ints(numbers)
+	convert_list_content(numbers, int)
 
 	grid_borders = list()
 	for i in range(line_count):
@@ -58,22 +70,8 @@ def read_bingo(data_path):
 		grid_content = lines[grid_start+1: grid_end]
 		for j in range(len(grid_content)):
 			grid_content[j] = grid_content[j].split()
-		_tuplist_to_ints(grid_content)
+		convert_list_content(grid_content, int)
 
 		grids.append(BingoGrid(grid_content))
 
 	return numbers, grids
-
-
-def _tuplist_to_ints(tuplist):
-	for i in range(len(tuplist)):
-		x = tuplist[i]
-
-		if isinstance(x, _TYPES_LIST_TUPLE):
-			_tuplist_to_ints(x)
-
-		else:
-			try:
-				tuplist[i] = int(x)
-			except:
-				pass
