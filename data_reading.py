@@ -25,22 +25,21 @@ def data_from_lines(data_path, conversion=None):
 	# data_path is of type pathlib.Path.
 	# conversion is a function that takes a line as its
 	# only argument and transforms it into usable data.
-	lines = lines_from_file(data_path)
-	data = list()
+	lines = _lines_from_file(data_path)
 
 	if conversion is None:
-		conv_or_not = lambda line: line
-	else:
-		conv_or_not = lambda line: conversion(line)
+		return lines
+
+	data = list()
 
 	for line in lines:
 		if len(line) > 0:
-			data.append(conv_or_not(line))
+			data.append(conversion(line))
 
 	return data
 
 
-def lines_from_file(path):
+def _lines_from_file(path):
 	# path is of type pathlib.Path.
 	with path.open(mode=_FILE_MODE_R) as data_file:
 		content = data_file.read()
@@ -49,7 +48,8 @@ def lines_from_file(path):
 
 
 def read_bingo(data_path):
-	lines = lines_from_file(data_path)
+	# data_path is of type pathlib.Path.
+	lines = _lines_from_file(data_path)
 	line_count = len(lines)
 
 	numbers = lines[0].split(_COMMA)
