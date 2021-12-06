@@ -14,7 +14,7 @@ def convert_list_content(some_list, conversion):
 		item = some_list[i]
 
 		if isinstance(item, list):
-			convert_list_content(item)
+			convert_list_content(item, conversion)
 
 		else:
 			try:
