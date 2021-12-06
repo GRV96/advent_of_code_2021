@@ -6,19 +6,18 @@ from data_reading import convert_list_content, data_from_lines
 
 _COMMA = ","
 
-_DURATION = 80 # In days
-
 _INIT_TIME = 8
 _RESET_TIME = 6
 
 
 data_path = Path(argv[1])
+duration = int(argv[2])
 
 lanternfish_data = data_from_lines(data_path)[0]
 lanternfish = lanternfish_data.split(_COMMA)
 convert_list_content(lanternfish, int)
 
-for day in range(_DURATION):
+for day in range(duration):
 
 	for i in range(len(lanternfish)):
 
@@ -29,5 +28,4 @@ for day in range(_DURATION):
 			lanternfish[i] = _RESET_TIME
 			lanternfish.append(_INIT_TIME)
 
-
-print(f"{len(lanternfish)} lanternfish after {_DURATION} days")
+print(f"{len(lanternfish)} lanternfish after {duration} days")
