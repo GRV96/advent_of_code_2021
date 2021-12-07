@@ -14,7 +14,7 @@ _COMMA = ","
 def _round_half_up(n, decimals=0):
 	# Source: https://realpython.com/python-rounding/#rounding-half-up
 	multiplier = 10 ** decimals
-	return floor(n*multiplier + 0.5) / multiplier
+	return floor(n * multiplier + 0.5) / multiplier
 
 data_path = Path(argv[1])
 
