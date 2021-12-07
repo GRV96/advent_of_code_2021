@@ -21,12 +21,15 @@ def _sign(number):
 
 
 data_path = Path(argv[1])
+puzzle_num = int(argv[2])
 
-# Only puzzle 2 considers the diagonals.
-try:
-	consider_diagonals = argv[2].lower() == "d"
-except IndexError:
+if puzzle_num == 1:
 	consider_diagonals = False
+elif puzzle_num == 2:
+	consider_diagonals = True
+else:
+	print(f"{puzzle_num} is not a puzzle number.")
+	exit(1)
 
 vent_line_data = data_from_lines(data_path)
 
