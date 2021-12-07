@@ -28,15 +28,18 @@ def data_from_lines(data_path, conversion=None):
 	# conversion is a function that takes a line as its
 	# only argument and transforms it into usable data.
 	lines = _lines_from_file(data_path)
-
-	if conversion is None:
-		return lines
-
 	data = list()
 
+	if conversion is None:
+		conv_or_not = lambda line: line
+	else:
+		conv_or_not = lambda line: conversion(line)
+
+	# Even when no conversion is needed, data must go through
+	# this loop so that all empty lines are eliminated.
 	for line in lines:
 		if len(line) > 0:
-			data.append(conversion(line))
+			data.append(conv_or_not(line))
 
 	return data
 
