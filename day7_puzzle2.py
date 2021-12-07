@@ -21,14 +21,14 @@ data_path = Path(argv[1])
 positions = data_from_lines(data_path)[0].split(_COMMA)
 convert_list_content(positions, int)
 
-average_position =  sum(positions)/len(positions)
-average_position = int(_round_half_up(average_position))
+alignment_position =  sum(positions)/len(positions)
+alignment_position = int(_round_half_up(alignment_position))
 
 fuel_cost = 0
 
 for position in positions:
-	distance = abs(position - average_position)
+	distance = abs(position - alignment_position)
 	fuel_cost += int(distance * (distance + 1)/2)
 
-print(f"Alignement position: {average_position}")
+print(f"Alignement position: {alignment_position}")
 print(f"Fuel cost: {fuel_cost}")
