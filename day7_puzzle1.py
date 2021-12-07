@@ -16,6 +16,7 @@ def _round_half_up(n, decimals=0):
 	multiplier = 10 ** decimals
 	return floor(n * multiplier + 0.5) / multiplier
 
+
 data_path = Path(argv[1])
 
 positions = data_from_lines(data_path)[0].split(_COMMA)
