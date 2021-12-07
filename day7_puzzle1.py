@@ -28,5 +28,5 @@ fuel_cost = 0
 for position in positions:
 	fuel_cost += abs(position - alignment_position)
 
-print(f"Alignement position: {alignment_position}")
+print(f"Alignment position: {alignment_position}")
 print(f"Fuel cost: {fuel_cost}")

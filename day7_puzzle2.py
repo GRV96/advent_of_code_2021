@@ -28,7 +28,9 @@ fuel_cost = 0
 
 for position in positions:
 	distance = abs(position - alignment_position)
-	fuel_cost += int(distance * (distance + 1) / 2)
+	fuel_cost += distance * (distance + 1) / 2
 
-print(f"Alignement position: {alignment_position}")
+fuel_cost = int(fuel_cost)
+
+print(f"Alignment position: {alignment_position}")
 print(f"Fuel cost: {fuel_cost}")
