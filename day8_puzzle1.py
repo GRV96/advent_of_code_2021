@@ -17,10 +17,10 @@ identifiable_num_count = 0
 
 for entry in note_entries:
 	readings = entry.split(_PIPE)
-	readings = readings[1].split(_SPACE)
+	outputs = readings[1].split(_SPACE)
 
-	for reading in readings:
-		if len(reading) in _UNIQUE_SEG_NUMS:
+	for output in outputs:
+		if len(output) in _UNIQUE_SEG_NUMS:
 			identifiable_num_count += 1
 
 print(f"Number of 1s, 4s, 7s and 8s: {identifiable_num_count}")
