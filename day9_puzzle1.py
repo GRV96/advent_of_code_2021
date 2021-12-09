@@ -5,20 +5,20 @@ from data_reading import data_from_lines
 
 
 def _coords_are_low_point(heightmap, row, column, height):
-	neighboor_heights = (
+	neighbor_heights = (
 		_get_from_heightmap(heightmap, row-1, column), # Up
 		_get_from_heightmap(heightmap, row+1, column), # Down
 		_get_from_heightmap(heightmap, row, column-1), # Left
 		_get_from_heightmap(heightmap, row, column+1)) # Right
 
-	for neighboor_height in neighboor_heights:
-		if neighboor_height <= height:
+	for neighbor_height in neighbor_heights:
+		if neighbor_height <= height:
 			return False
 
 	#print()
-	#print(f" {neighboor_heights[0]} ")
-	#print(f"{neighboor_heights[2]}{height}{neighboor_heights[3]}")
-	#print(f" {neighboor_heights[1]} ")
+	#print(f" {neighbor_heights[0]} ")
+	#print(f"{neighbor_heights[2]}{height}{neighbor_heights[3]}")
+	#print(f" {neighbor_heights[1]} ")
 	return True
 
 
