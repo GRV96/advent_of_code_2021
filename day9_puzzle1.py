@@ -32,12 +32,7 @@ def _get_from_heightmap(heightmap, row, column):
 
 
 def _line_to_ints(line):
-	numbers = list()
-
-	for digit in line:
-		numbers.append(int(digit))
-
-	return numbers
+	return [int(digit) for digit in line]
 
 
 data_path = Path(argv[1])
