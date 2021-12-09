@@ -6,13 +6,13 @@ from data_reading import data_from_lines
 
 def _coords_are_low_point(heightmap, row, column, height):
 	neighboor_heights = (
-		_get_from_2d_tuplist(heightmap, row-1, column), # Up
-		_get_from_2d_tuplist(heightmap, row+1, column), # Down
-		_get_from_2d_tuplist(heightmap, row, column-1), # Left
-		_get_from_2d_tuplist(heightmap, row, column+1)) # Right
+		_get_from_heightmap(heightmap, row-1, column), # Up
+		_get_from_heightmap(heightmap, row+1, column), # Down
+		_get_from_heightmap(heightmap, row, column-1), # Left
+		_get_from_heightmap(heightmap, row, column+1)) # Right
 
 	for neighboor_height in neighboor_heights:
-		if neighboor_height <= height and neighboor_height >= 0:
+		if neighboor_height <= height:
 			return False
 
 	#print()
@@ -22,11 +22,11 @@ def _coords_are_low_point(heightmap, row, column, height):
 	return True
 
 
-def _get_from_2d_tuplist(tuplist, row, column):
+def _get_from_heightmap(heightmap, row, column):
 	try:
-		value = tuplist[row][column]
+		value = heightmap[row][column]
 	except IndexError:
-		value = -1
+		value = 10
 
 	return value
 
@@ -50,7 +50,7 @@ for i in range(len(heightmap)):
 	row = heightmap[i]
 
 	for j in range(len(row)):
-		height = _get_from_2d_tuplist(heightmap, i, j)
+		height = _get_from_heightmap(heightmap, i, j)
 
 		if _coords_are_low_point(heightmap, i, j, height):
 			risk_level = height + 1
