@@ -12,9 +12,13 @@ def _coords_are_low_point(heightmap, row, column, height):
 		_get_from_2d_tuplist(heightmap, row, column+1)) # Right
 
 	for neighboor_height in neighboor_heights:
-		if neighboor_height < height and neighboor_height >= 0:
+		if neighboor_height <= height and neighboor_height >= 0:
 			return False
 
+	#print()
+	#print(f" {neighboor_heights[0]} ")
+	#print(f"{neighboor_heights[2]}{height}{neighboor_heights[3]}")
+	#print(f" {neighboor_heights[1]} ")
 	return True
 
 
@@ -49,6 +53,7 @@ for i in range(len(heightmap)):
 		height = _get_from_2d_tuplist(heightmap, i, j)
 
 		if _coords_are_low_point(heightmap, i, j, height):
-			risk_level_sum += height + 1
+			risk_level = height + 1
+			risk_level_sum += risk_level
 
 print(f"Sum of the risk levels: {risk_level_sum}")
