@@ -55,7 +55,11 @@ class DigitPatternMap:
 		self._pattern_to_digit = dict()
 
 	def get_digit(self, pattern: str) -> int:
-		return self._pattern_to_digit.get(pattern, self.__class__.UNDEF_DIGIT)
+		for patt, digit in self._pattern_to_digit.items():
+			if are_patterns_equivalent(patt, pattern):
+				return digit
+
+		return pattern, self.__class__.UNDEF_DIGIT
 
 	def get_digit_to_pattern(self):
 		return dict(self._digit_to_pattern)
@@ -133,6 +137,17 @@ def map_digit_to_pattern(
 		if diff == difference:
 			digit_pattern_map.register(unknown_digit, pattern)
 			break
+
+
+def are_patterns_equivalent(pattern1, pattern2):
+	if len(pattern1) != len(pattern2):
+		return False
+
+	for segment in pattern1:
+		if segment not in pattern2:
+			return False
+
+	return True
 
 
 data_path = Path(argv[1])
