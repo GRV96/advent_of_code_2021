@@ -12,13 +12,9 @@ def _coords_are_low_point(heightmap, row, column, height):
 		_get_from_heightmap(heightmap, row, column+1)) # Right
 
 	for neighbor_height in neighbor_heights:
-		if neighbor_height <= height:
+		if neighbor_height >= 0 and neighbor_height <= height:
 			return False
 
-	#print()
-	#print(f" {neighbor_heights[0]} ")
-	#print(f"{neighbor_heights[2]}{height}{neighbor_heights[3]}")
-	#print(f" {neighbor_heights[1]} ")
 	return True
 
 
@@ -26,7 +22,7 @@ def _get_from_heightmap(heightmap, row, column):
 	try:
 		value = heightmap[row][column]
 	except IndexError:
-		value = 10
+		value = -1
 
 	return value
 
