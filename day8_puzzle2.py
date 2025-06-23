@@ -171,10 +171,13 @@ for entry in note_entries:
 	# 6 has five segments that 1 does not have.
 	map_digit_to_pattern(digit_pattern_map, 1, 6, 5)
 
-	# 9 is the last digit with six segments.
-	for pattern in patterns.get_patterns_of_size(6):
+	# 9 has two segments that 4 does not have.
+	map_digit_to_pattern(digit_pattern_map, 4, 9, 2)
+
+	# 0 is the last unknown pattern.
+	for pattern in patterns:
 		if not digit_pattern_map.has_pattern(pattern):
-			digit_pattern_map.register(9, pattern)
+			digit_pattern_map.register(0, pattern)
 			break
 
 	number = 0
