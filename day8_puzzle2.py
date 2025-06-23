@@ -28,6 +28,17 @@ _PATTERN_SIZE_TO_DIGIT = {
 }
 
 
+def are_patterns_equivalent(pattern1, pattern2):
+	if len(pattern1) != len(pattern2):
+		return False
+
+	for segment in pattern1:
+		if segment not in pattern2:
+			return False
+
+	return True
+
+
 def raise_digit_error(digit: int) -> None:
 	if digit < 0 or digit > 9:
 		raise ValueError(f"Digits range from 0 to 9. Recieved {digit}")
@@ -122,17 +133,6 @@ def map_digit_to_pattern(
 		if diff == difference:
 			digit_pattern_map.register(unknown_digit, pattern)
 			break
-
-
-def are_patterns_equivalent(pattern1, pattern2):
-	if len(pattern1) != len(pattern2):
-		return False
-
-	for segment in pattern1:
-		if segment not in pattern2:
-			return False
-
-	return True
 
 
 data_path = Path(argv[1])
