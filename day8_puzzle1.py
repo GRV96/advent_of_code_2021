@@ -16,8 +16,8 @@ note_entries = data_from_lines(data_path)
 identifiable_num_count = 0
 
 for entry in note_entries:
-	readings = entry.split(_PIPE)
-	outputs = readings[1].split(_SPACE)
+	split_entry = entry.split(_PIPE)
+	outputs = split_entry[1].split(_SPACE)
 
 	for output in outputs:
 		if len(output) in _UNIQUE_SEG_NUMS:
