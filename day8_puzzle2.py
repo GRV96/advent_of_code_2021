@@ -7,20 +7,6 @@ from data_reading import data_from_lines
 _PIPE = "|"
 _SPACE = " "
 
-
-_NORMAL_DISPLAYS = {
-	0: "abcefg",
-	1: "cf",
-	2: "acdeg",
-	3: "acdfg",
-	4: "bcdf",
-	5: "abdfg",
-	6: "abdefg",
-	7: "acf",
-	8: "abcdefg",
-	9: "abcdfg"
-}
-
 _DIGIT_TO_PATTERN_SIZE = {
 	0: 6,
 	1: 2,
@@ -85,7 +71,6 @@ class DigitPatternMap:
 
 
 class PatternCollection:
-
 	def __init__(self, patterns) -> None:
 		self._content = tuple(patterns)
 
