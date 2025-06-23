@@ -4,10 +4,10 @@ from sys import argv
 from data_reading import data_from_lines
 
 
-_PIPE = "|"
-_SPACE = " "
+_PIPE: str = "|"
+_SPACE: str = " "
 
-_DIGIT_TO_PATTERN_SIZE = {
+_DIGIT_TO_PATTERN_SIZE: dict[int, int] = {
 	0: 6,
 	1: 2,
 	2: 5,
@@ -20,7 +20,7 @@ _DIGIT_TO_PATTERN_SIZE = {
 	9: 6
 }
 
-_PATTERN_SIZE_TO_DIGIT = {
+_PATTERN_SIZE_TO_DIGIT: dict[int, int] = {
 	2: 1,
 	3: 7,
 	4: 4,
@@ -28,7 +28,7 @@ _PATTERN_SIZE_TO_DIGIT = {
 }
 
 
-def are_patterns_equivalent(pattern1, pattern2):
+def are_patterns_equivalent(pattern1: str, pattern2: str) -> bool:
 	if len(pattern1) != len(pattern2):
 		return False
 
@@ -41,11 +41,11 @@ def are_patterns_equivalent(pattern1, pattern2):
 
 def raise_digit_error(digit: int) -> None:
 	if digit < 0 or digit > 9:
-		raise ValueError(f"Digits range from 0 to 9. Recieved {digit}")
+		raise ValueError(f"Digits range from 0 to 9. Recieved {digit}.")
 
 
 class DigitPatternMap:
-	UNDEF_DIGIT = -1
+	UNDEF_DIGIT: int = -1
 
 	def __init__(self) -> None:
 		self._digit_to_pattern = dict()
@@ -58,14 +58,14 @@ class DigitPatternMap:
 
 		return pattern, self.__class__.UNDEF_DIGIT
 
-	def get_digit_to_pattern(self):
+	def get_digit_to_pattern(self) -> dict[int, str]:
 		return dict(self._digit_to_pattern)
 
 	def get_pattern(self, digit: int) -> str:
 		raise_digit_error(digit)
 		return self._digit_to_pattern.get(digit)
 
-	def get_pattern_to_digit(self):
+	def get_pattern_to_digit(self) -> dict[str, int]:
 		return dict(self._pattern_to_digit)
 
 	def has_digit(self, digit: int) -> bool:
@@ -88,7 +88,7 @@ class PatternCollection:
 	def __iter__(self):
 		return iter(self._content)
 
-	def get_patterns_of_size(self, pattern_size: int):
+	def get_patterns_of_size(self, pattern_size: int) -> tuple[str, ...]:
 		return *(pattern
 		   for pattern in self._content
 		   if len(pattern) == pattern_size),
