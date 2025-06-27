@@ -14,7 +14,7 @@ def _evaluate_location(heightmap, row, column):
 
 	is_low_point = True
 	for neighbor_height in neighbor_heights:
-		if neighbor_height >= 0 and neighbor_height <= height:
+		if neighbor_height < height:
 			is_low_point = False
 			break
 
@@ -25,7 +25,7 @@ def _get_from_heightmap(heightmap, row, column):
 	try:
 		value = heightmap[row][column]
 	except IndexError:
-		value = -1
+		value = 10
 
 	return value
 
