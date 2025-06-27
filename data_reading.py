@@ -1,10 +1,14 @@
+from pathlib import Path
+from typing import Generator
+
 from day4_bingo_grid import BingoGrid
 
 
 _COMMA = ","
 _NEW_LINE = "\n"
 
-_FILE_MODE_R = "r"
+_ENCODING_UTF8 = "utf-8"
+_MODE_R = "r"
 
 
 def convert_list_content(some_list, conversion):
@@ -46,7 +50,7 @@ def data_from_lines(data_path, conversion=None):
 
 def _lines_from_file(path):
 	# path is of type pathlib.Path.
-	with path.open(mode=_FILE_MODE_R) as data_file:
+	with path.open(mode=_MODE_R) as data_file:
 		content = data_file.read()
 
 	return content.split(_NEW_LINE)
@@ -80,3 +84,8 @@ def read_bingo(data_path):
 		grids.append(BingoGrid(grid_content))
 
 	return numbers, grids
+
+
+def read_file_lines(file_path: Path) -> Generator[str, None, None]:
+	with file_path.open(encoding=_ENCODING_UTF8, mode=_MODE_R) as data_file:
+		yield from data_file

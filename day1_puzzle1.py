@@ -1,17 +1,19 @@
 from pathlib import Path
 from sys import argv
 
-from data_reading import data_from_lines
+from data_reading import read_file_lines
 
 
 data_path = Path(argv[1])
 
-depths = data_from_lines(data_path, int)
+depth_gen = read_file_lines(data_path)
 
 increases = 0
-prev_depth = 10e6 # Arbitrarily high number
+prev_depth = int(next(depth_gen))
 
-for depth in depths:
+for depth in depth_gen:
+	depth = int(depth)
+
 	if depth > prev_depth:
 		increases += 1
 
