@@ -88,4 +88,5 @@ def read_bingo(data_path):
 
 def read_file_lines(file_path: Path) -> Generator[str, None, None]:
 	with file_path.open(encoding=_ENCODING_UTF8, mode=_MODE_R) as data_file:
-		yield from data_file
+		for line in data_file:
+			yield line.strip()

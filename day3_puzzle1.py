@@ -1,7 +1,7 @@
 from pathlib import Path
 from sys import argv
 
-from data_reading import data_from_lines
+from data_reading import read_file_lines
 
 
 ONE_AS_STR = "1"
@@ -9,7 +9,7 @@ ONE_AS_STR = "1"
 
 data_path = Path(argv[1])
 
-bin_nums = data_from_lines(data_path)
+bin_nums = tuple(read_file_lines(data_path))
 num_count = len(bin_nums)
 bit_count = len(bin_nums[0])
 
