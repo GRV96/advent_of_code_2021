@@ -1,7 +1,7 @@
 from pathlib import Path
 from sys import argv
 
-from data_reading import data_from_lines
+from data_reading import read_file_lines
 
 
 _PIPE: str = "|"
@@ -28,7 +28,7 @@ _PATTERN_SIZE_TO_DIGIT: dict[int, int] = {
 }
 
 
-def are_patterns_equivalent(pattern1: str, pattern2: str) -> bool:
+def _are_patterns_equivalent(pattern1: str, pattern2: str) -> bool:
 	if len(pattern1) != len(pattern2):
 		return False
 
@@ -39,7 +39,7 @@ def are_patterns_equivalent(pattern1: str, pattern2: str) -> bool:
 	return True
 
 
-def raise_digit_error(digit: int) -> None:
+def _raise_digit_error(digit: int) -> None:
 	if digit < 0 or digit > 9:
 		raise ValueError(f"Digits range from 0 to 9. Recieved {digit}.")
 
@@ -53,7 +53,7 @@ class DigitPatternMap:
 
 	def get_digit(self, pattern: str) -> int:
 		for patt, digit in self._pattern_to_digit.items():
-			if are_patterns_equivalent(patt, pattern):
+			if _are_patterns_equivalent(patt, pattern):
 				return digit
 
 		return pattern, self.__class__.UNDEF_DIGIT
@@ -62,21 +62,21 @@ class DigitPatternMap:
 		return dict(self._digit_to_pattern)
 
 	def get_pattern(self, digit: int) -> str:
-		raise_digit_error(digit)
+		_raise_digit_error(digit)
 		return self._digit_to_pattern.get(digit)
 
 	def get_pattern_to_digit(self) -> dict[str, int]:
 		return dict(self._pattern_to_digit)
 
 	def has_digit(self, digit: int) -> bool:
-		raise_digit_error(digit)
+		_raise_digit_error(digit)
 		return digit in self._digit_to_pattern
 
 	def has_pattern(self, pattern: str) -> bool:
 		return pattern in self._pattern_to_digit
 
 	def register(self, digit: int, pattern: str) -> None:
-		raise_digit_error(digit)
+		_raise_digit_error(digit)
 		self._digit_to_pattern[digit] = pattern
 		self._pattern_to_digit[pattern] = digit
 
@@ -94,7 +94,7 @@ class PatternCollection:
 		   if len(pattern) == pattern_size),
 
 
-def nb_segs_not_in_other_pattern(pattern1: str, pattern2: str) -> int:
+def _nb_segs_not_in_other_pattern(pattern1: str, pattern2: str) -> int:
 	"""
 	Counts the segments in the first pattern that do not appear in the second
 	pattern.
@@ -108,13 +108,13 @@ def nb_segs_not_in_other_pattern(pattern1: str, pattern2: str) -> int:
 	return count
 
 
-def map_digit_to_pattern(
+def _map_digit_to_pattern(
 		digit_pattern_map: DigitPatternMap,
 		known_digit: int,
 		unknown_digit: int,
 		difference: int) -> None:
-	raise_digit_error(known_digit)
-	raise_digit_error(unknown_digit)
+	_raise_digit_error(known_digit)
+	_raise_digit_error(unknown_digit)
 
 	pattern_size = _DIGIT_TO_PATTERN_SIZE[unknown_digit]
 	known_pattern = digit_pattern_map.get_pattern(known_digit)
@@ -126,9 +126,9 @@ def map_digit_to_pattern(
 			continue
 
 		if difference >= 0:
-			diff = nb_segs_not_in_other_pattern(pattern, known_pattern)
+			diff = _nb_segs_not_in_other_pattern(pattern, known_pattern)
 		else:
-			diff = nb_segs_not_in_other_pattern(known_pattern, pattern)
+			diff = _nb_segs_not_in_other_pattern(known_pattern, pattern)
 
 		if diff == difference:
 			digit_pattern_map.register(unknown_digit, pattern)
@@ -137,11 +137,11 @@ def map_digit_to_pattern(
 
 data_path = Path(argv[1])
 
-note_entries = data_from_lines(data_path)
+gen_note_entries = read_file_lines(data_path)
 
 output_sum = 0
 
-for entry in note_entries:
+for entry in gen_note_entries:
 	split_entry = entry.split(_PIPE)
 	patterns = PatternCollection(split_entry[0].strip().split(_SPACE))
 	outputs = split_entry[1].strip().split(_SPACE)
@@ -157,10 +157,10 @@ for entry in note_entries:
 			digit_pattern_map.register(digit, pattern)
 
 	# 2 has three segments that 4 does not have.
-	map_digit_to_pattern(digit_pattern_map, 4, 2, 3)
+	_map_digit_to_pattern(digit_pattern_map, 4, 2, 3)
 
 	# 3 has three segments that 1 does not have.
-	map_digit_to_pattern(digit_pattern_map, 1, 3, 3)
+	_map_digit_to_pattern(digit_pattern_map, 1, 3, 3)
 
 	# 5 is the last digit with five segments.
 	for pattern in patterns.get_patterns_of_size(5):
@@ -169,10 +169,10 @@ for entry in note_entries:
 			break
 
 	# 6 has five segments that 1 does not have.
-	map_digit_to_pattern(digit_pattern_map, 1, 6, 5)
+	_map_digit_to_pattern(digit_pattern_map, 1, 6, 5)
 
 	# 9 has two segments that 4 does not have.
-	map_digit_to_pattern(digit_pattern_map, 4, 9, 2)
+	_map_digit_to_pattern(digit_pattern_map, 4, 9, 2)
 
 	# 0 is the last unknown pattern.
 	for pattern in patterns:

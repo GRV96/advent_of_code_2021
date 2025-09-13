@@ -1,7 +1,7 @@
 from pathlib import Path
 from sys import argv
 
-from data_reading import data_from_lines
+from data_reading import read_file_lines
 
 
 WINDOW_SIZE = 3
@@ -30,7 +30,7 @@ class MeasurementWindow:
 
 data_path = Path(argv[1])
 
-depths = data_from_lines(data_path, int)
+depths = tuple(int(depth) for depth in read_file_lines(data_path))
 depth_count = len(depths)
 loop_limit = depth_count - depth_count % WINDOW_SIZE
 

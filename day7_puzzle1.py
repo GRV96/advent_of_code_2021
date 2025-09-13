@@ -3,15 +3,13 @@ from pathlib import Path
 from statistics import median
 from sys import argv
 
-from data_reading import\
-	convert_list_content,\
-	data_from_lines
+from data_reading import read_file_lines
 
 
 _COMMA = ","
 
 
-def _round_half_up(n, decimals=0):
+def _round_half_up(n: float, decimals: int = 0) -> float:
 	# Source: https://realpython.com/python-rounding/#rounding-half-up
 	multiplier = 10 ** decimals
 	return floor(n * multiplier + 0.5) / multiplier
@@ -19,8 +17,10 @@ def _round_half_up(n, decimals=0):
 
 data_path = Path(argv[1])
 
-positions = data_from_lines(data_path)[0].split(_COMMA)
-convert_list_content(positions, int)
+positions = *(
+	int(p) for p in
+	next(read_file_lines(data_path)).split(_COMMA)
+),
 
 alignment_position = int(_round_half_up(median(positions)))
 

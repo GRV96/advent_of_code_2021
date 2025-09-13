@@ -2,7 +2,7 @@ from enum import Enum
 from pathlib import Path
 from sys import argv
 
-from data_reading import data_from_lines
+from data_reading import read_file_lines
 
 
 EMPTY_STR = ""
@@ -61,7 +61,7 @@ def make_bit_criteria(mcb, rating_value):
 
 data_path = Path(argv[1])
 
-bin_numbers = data_from_lines(data_path)
+bin_numbers = tuple(read_file_lines(data_path))
 bit_count = len(bin_numbers[0])
 
 og_numbers = list(bin_numbers)
