@@ -1,7 +1,7 @@
 from pathlib import Path
 from sys import argv
 
-from data_reading import data_from_lines
+from data_reading import read_file_lines
 
 
 _ARROW = " -> "
@@ -31,7 +31,7 @@ else:
 	print(f"{puzzle_num} is not a puzzle number.")
 	exit(1)
 
-vent_line_data = data_from_lines(data_path)
+vent_line_data = read_file_lines(data_path)
 
 diagram = dict()
 
