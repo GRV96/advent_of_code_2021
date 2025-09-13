@@ -1,9 +1,7 @@
 from pathlib import Path
 from sys import argv
 
-from data_reading import\
-	convert_list_content,\
-	data_from_lines
+from data_reading import read_file_lines
 
 
 _COMMA = ","
@@ -15,9 +13,8 @@ _FIRST_BIRTH_DELAY = 8
 data_path = Path(argv[1])
 duration = int(argv[2])
 
-lanternfish_data = data_from_lines(data_path)[0]
-lanternfish = lanternfish_data.split(_COMMA)
-convert_list_content(lanternfish, int)
+lanternfish_data = next(read_file_lines(data_path))
+lanternfish = [int(lf) for lf in lanternfish_data.split(_COMMA)]
 
 for day in range(duration):
 
