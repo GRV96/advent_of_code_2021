@@ -1,7 +1,7 @@
 from pathlib import Path
 from sys import argv
 
-from data_reading import data_from_lines
+from data_reading import read_file_lines
 
 
 _COMPLETION_CHAR_SCORE = {
@@ -70,12 +70,12 @@ def _treat_line(line):
 
 data_path = Path(argv[1])
 
-lines = data_from_lines(data_path)
+gen_lines = read_file_lines(data_path)
 
 completion_scores = list()
 illegal_score_sum = 0
 
-for line in lines:
+for line in gen_lines:
 	result = _treat_line(line)
 
 	if len(result) > 1:
