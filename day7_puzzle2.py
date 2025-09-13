@@ -1,15 +1,14 @@
 from pathlib import Path
 from sys import argv, exit
+from typing import Iterable
 
-from data_reading import\
-	convert_list_content,\
-	data_from_lines
+from data_reading import read_file_lines
 
 
 _COMMA = ","
 
 
-def _fuel_cost_puzzle1(alignment, positions):
+def _fuel_cost_puzzle1(alignment: int, positions: Iterable[int]) -> int:
 	cost = 0
 
 	for position in positions:
@@ -19,7 +18,7 @@ def _fuel_cost_puzzle1(alignment, positions):
 	return cost 
 
 
-def _fuel_cost_puzzle2(alignment, positions):
+def _fuel_cost_puzzle2(alignment: int, positions: Iterable[int]) -> float:
 	cost = 0
 
 	for position in positions:
@@ -32,8 +31,10 @@ def _fuel_cost_puzzle2(alignment, positions):
 data_path = Path(argv[1])
 puzzle_num = int(argv[2])
 
-positions = data_from_lines(data_path)[0].split(_COMMA)
-convert_list_content(positions, int)
+positions = *(
+	int(p) for p in
+	next(read_file_lines(data_path)).split(_COMMA)
+),
 
 if puzzle_num == 1:
 	fuel_cost_fnc = _fuel_cost_puzzle1
