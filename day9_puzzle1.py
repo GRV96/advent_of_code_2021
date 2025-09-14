@@ -1,7 +1,7 @@
 from pathlib import Path
 from sys import argv
 
-from data_reading import data_from_lines
+from data_reading import read_file_lines
 
 
 def _evaluate_location(heightmap, row, column):
@@ -30,16 +30,17 @@ def _get_from_heightmap(heightmap, row, column):
 	return value
 
 
-def _line_to_ints(line):
-	return [int(digit) for digit in line]
+def _line_to_ints(line: str) -> tuple[int]:
+	return *(int(digit) for digit in line),
 
 
 data_path = Path(argv[1])
-
-heightmap = data_from_lines(data_path, _line_to_ints)
+heightmap = *(
+	_line_to_ints(heightmap_line)
+	for heightmap_line in read_file_lines(data_path)
+),
 
 risk_level_sum = 0
-
 for i in range(len(heightmap)):
 	row = heightmap[i]
 
