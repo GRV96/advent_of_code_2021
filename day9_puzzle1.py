@@ -4,7 +4,11 @@ from sys import argv
 from data_reading import read_file_lines
 
 
-def _evaluate_location(heightmap, row, column):
+def _evaluate_location(
+		heightmap: tuple[tuple[int], ...],
+		row: int,
+		column: int
+	) -> tuple[int, bool]:
 	height = _get_from_heightmap(heightmap, i, j)
 	neighbor_heights = (
 		_get_from_heightmap(heightmap, row-1, column), # Up
@@ -21,7 +25,11 @@ def _evaluate_location(heightmap, row, column):
 	return height, is_low_point
 
 
-def _get_from_heightmap(heightmap, row, column):
+def _get_from_heightmap(
+		heightmap: tuple[tuple[int], ...],
+		row: int,
+		column: int
+	) -> int:
 	try:
 		value = heightmap[row][column]
 	except IndexError:
